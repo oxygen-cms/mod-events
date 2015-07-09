@@ -1,0 +1,39 @@
+{
+    "name": "oxygen/mod-events",
+    "description": "Upcoming Events Module",
+    "license": "MIT",
+    "keywords": [
+        "cms",
+        "framework",
+        "OxygenExtension"
+    ],
+    "authors": [
+        {
+            "name": "Chris Chamberlain",
+            "email": "c.chamberlain@iinet.net.au"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "oxygen/core": "~0.4.0",
+        "intervention/image":  "~2.0",
+        "illuminate/support": "~5.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OxygenModule\\Events\\": "src/"
+        }
+    },
+    "extra": {
+        "title": "Oxygen Module - Events",
+        "readme": "oxygen.md",
+        "changes": "changes.md",
+        "providers": [
+            {
+                "name": "Events",
+                "class": "OxygenModule\\Events\\EventsServiceProvider",
+                "description": "Adds the Events module"
+            }
+        ]
+    }
+}
