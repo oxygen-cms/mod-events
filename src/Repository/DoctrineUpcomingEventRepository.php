@@ -47,6 +47,7 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
                    ->setParameter('stage', UpcomingEvent::STAGE_PUBLISHED)
                    ->setParameter('currentDate', $currentDate)
                    ->setParameter('active', true)
+                   ->orderBy('o.endDate', 'ASC')
                    ->setMaxResults($howMany),
                 new QueryParameters(['excludeTrashed'])
             );
