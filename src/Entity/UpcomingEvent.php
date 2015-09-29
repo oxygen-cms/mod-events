@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Oxygen\Data\Behaviour\Accessors;
 use Oxygen\Data\Behaviour\Fillable;
 use Oxygen\Data\Behaviour\PrimaryKey;
+use Oxygen\Data\Behaviour\PrimaryKeyInterface;
 use Oxygen\Data\Behaviour\Publishes;
 use Oxygen\Data\Behaviour\SoftDeletes;
 use Oxygen\Data\Behaviour\Timestamps;
@@ -19,7 +20,7 @@ use Oxygen\Data\Validation\Validatable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements Validatable {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable {
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes {
         Publishes::__clone insteadof PrimaryKey;
