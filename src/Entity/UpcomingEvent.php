@@ -6,6 +6,8 @@ use DateTime;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Oxygen\Data\Behaviour\Accessors;
+use Oxygen\Data\Behaviour\CacheInvalidator;
+use Oxygen\Data\Behaviour\CacheInvalidatorInterface;
 use Oxygen\Data\Behaviour\Fillable;
 use Oxygen\Data\Behaviour\PrimaryKey;
 use Oxygen\Data\Behaviour\PrimaryKeyInterface;
@@ -20,9 +22,9 @@ use Oxygen\Data\Validation\Validatable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface {
 
-    use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes {
+    use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
         Publishes::__clone insteadof PrimaryKey;
     }
     use Accessors, Fillable;
