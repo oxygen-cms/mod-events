@@ -10,7 +10,7 @@ use Oxygen\Crud\Controller\VersionableCrudController;
 
 class UpcomingEventsController extends VersionableCrudController {
 
-    use Publishable;
+    use Publishable, Previewable;
 
     /**
      * Constructs the UpcomingEventsController.

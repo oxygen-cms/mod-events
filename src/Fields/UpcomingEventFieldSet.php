@@ -3,10 +3,11 @@
 
 namespace OxygenModule\Events\Fields;
 
+use Oxygen\Core\Form\ContentFieldName;
 use Oxygen\Core\Form\FieldSet;
 use OxygenModule\Events\Entity\UpcomingEvent;
 
-class UpcomingEventFieldSet extends FieldSet {
+class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
 
     /**
      * Creates the fields in the set.
@@ -77,9 +78,18 @@ class UpcomingEventFieldSet extends FieldSet {
     /**
      * Returns the name of the title field.
      *
-     * @return mixed
+     * @return string
      */
     public function getTitleFieldName() {
         return 'title';
+    }
+
+    /**
+     * Returns the name of the field that contains the content.
+     *
+     * @return string
+     */
+    public function getContentFieldName() {
+        return 'content';
     }
 }
