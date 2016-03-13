@@ -2,6 +2,7 @@
 
 namespace OxygenModule\Events\Controller;
 
+use Oxygen\Crud\Controller\Previewable;
 use OxygenModule\Events\Fields\UpcomingEventFieldSet;
 use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 use Oxygen\Core\Blueprint\BlueprintManager;
