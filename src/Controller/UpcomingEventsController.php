@@ -8,7 +8,7 @@ use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 use Oxygen\Core\Blueprint\BlueprintManager;
 use Oxygen\Crud\Controller\Publishable;
 use Oxygen\Crud\Controller\VersionableCrudController;
-use Oxygen\Preferences\PreferencesManager;
+use Preferences;
 
 class UpcomingEventsController extends VersionableCrudController {
 
@@ -32,10 +32,10 @@ class UpcomingEventsController extends VersionableCrudController {
      * @param $item
      * @return Response
      */
-    public function getContent($item, PreferencesManager $preferences) {
+    public function getContent($item = null) {
         $content = $this->getPreviewContent($item)->render();
 
-        return view($preferences->get('appearance.events::contentView'))->with('content', $content);
+        return view(Preferences::get('appearance.events::contentView'))->with('content', $content);
     }
 
 }

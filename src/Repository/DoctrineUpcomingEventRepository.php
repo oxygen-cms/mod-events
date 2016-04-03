@@ -37,24 +37,24 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
     public function getLatest($howMany) {
         $currentDate = new DateTime();
 
+        $q = $this->getQuery(
+            $this->createSelectQuery()
+                 ->andWhere('o.stage = :stage')
+                 ->andWhere('o.startDate <= :currentDate')
+                 ->andWhere('o.endDate >= :currentDate')
+                 ->andWhere('o.active = :active')
+                 ->setParameter('stage', UpcomingEvent::STAGE_PUBLISHED)
+                 ->setParameter('currentDate', $currentDate)
+                 ->setParameter('active', true)
+                 ->orderBy('o.endDate', 'ASC')
+                 ->setMaxResults($howMany),
+            new QueryParameters(['excludeTrashed'])
+        );
+        
         try {
-            $qb = $this->getQuery(
-                $this->createSelectQuery()
-                   ->andWhere('o.stage = :stage')
-                   ->andWhere('o.startDate <= :currentDate')
-                   ->andWhere('o.endDate >= :currentDate')
-                   ->andWhere('o.active = :active')
-                   ->setParameter('stage', UpcomingEvent::STAGE_PUBLISHED)
-                   ->setParameter('currentDate', $currentDate)
-                   ->setParameter('active', true)
-                   ->orderBy('o.endDate', 'ASC')
-                   ->setMaxResults($howMany),
-                new QueryParameters(['excludeTrashed'])
-            );
-
-            return $qb->getResult();
+            return $q->getResult();
         } catch(DoctrineNoResultException $e) {
-            throw new NoResultException($e, $this->replaceQueryParameters($qb->getDQL(), $qb->getParameters()));
+            throw $this->makeNoResultException($e, $q);
         }
     }
 }
