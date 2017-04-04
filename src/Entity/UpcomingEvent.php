@@ -109,6 +109,9 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
                 'name',
                 'max:255'
             ],
+            'content' => [
+                'blade_template'
+            ],
             'startDate' => [
                 'required',
                 'date'
