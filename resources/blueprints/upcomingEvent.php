@@ -4,6 +4,7 @@ use Oxygen\Crud\BlueprintTrait\PreviewableCrudTrait;
 use Oxygen\Crud\BlueprintTrait\PublishableCrudTrait;
 use Oxygen\Crud\BlueprintTrait\VersionableCrudTrait;
 use OxygenModule\Events\Controller\UpcomingEventsController;
+use Oxygen\Crud\BlueprintTrait\SearchableCrudTrait;
 
 Blueprint::make('UpcomingEvent', function($blueprint) {
     $blueprint->setController(UpcomingEventsController::class);
@@ -11,7 +12,7 @@ Blueprint::make('UpcomingEvent', function($blueprint) {
 
     $blueprint->setToolbarOrders([
         'section' => [
-            'getCreate', 'getTrash'
+            'getList.search', 'getCreate', 'getTrash'
         ],
         'item' => [
             'getPreview',
@@ -26,4 +27,5 @@ Blueprint::make('UpcomingEvent', function($blueprint) {
     $blueprint->useTrait(new PreviewableCrudTrait());
     $blueprint->useTrait(new VersionableCrudTrait());
     $blueprint->useTrait(new PublishableCrudTrait());
+    $blueprint->useTrait(new SearchableCrudTrait());
 });

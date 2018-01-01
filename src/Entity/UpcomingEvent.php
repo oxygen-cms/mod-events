@@ -16,13 +16,14 @@ use Oxygen\Data\Behaviour\SoftDeletes;
 use Oxygen\Data\Behaviour\Timestamps;
 use Oxygen\Data\Behaviour\Versions;
 use Oxygen\Data\Validation\Validatable;
+use Oxygen\Data\Behaviour\Searchable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable {
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
         Publishes::__clone insteadof PrimaryKey;
@@ -161,6 +162,10 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
         }
         $this->endDate = $endDate;
         return $this;
+    }
+
+    public static function getSearchableFields() {
+        return ['title'];
     }
 
 }
