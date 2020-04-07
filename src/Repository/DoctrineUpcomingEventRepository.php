@@ -29,9 +29,10 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
     /**
      * Returns the latest upcoming events.
      *
-     * @param $howMany
+     * @param int $howMany
      * @return array
      * @throws NoResultException if no results were found
+     * @throws \Exception
      */
 
     public function getLatest($howMany) {

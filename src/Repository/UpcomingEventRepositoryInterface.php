@@ -9,7 +9,7 @@ interface UpcomingEventRepositoryInterface extends RepositoryInterface {
     /**
      * Returns the latest upcoming events.
      *
-     * @param $howMany
+     * @param int $howMany
      * @return mixed
      */
 

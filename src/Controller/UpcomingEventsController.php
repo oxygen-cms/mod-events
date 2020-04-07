@@ -8,7 +8,7 @@ use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 use Oxygen\Core\Blueprint\BlueprintManager;
 use Oxygen\Crud\Controller\Publishable;
 use Oxygen\Crud\Controller\VersionableCrudController;
-use Preferences;
+use Oxygen\Preferences\Facades\Preferences;
 
 class UpcomingEventsController extends VersionableCrudController {
 
