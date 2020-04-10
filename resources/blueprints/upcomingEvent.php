@@ -6,7 +6,7 @@ use Oxygen\Crud\BlueprintTrait\VersionableCrudTrait;
 use OxygenModule\Events\Controller\UpcomingEventsController;
 use Oxygen\Crud\BlueprintTrait\SearchableCrudTrait;
 
-Blueprint::make('UpcomingEvent', function($blueprint) {
+Blueprint::make('UpcomingEvent', function(Oxygen\Core\Blueprint\Blueprint $blueprint) {
     $blueprint->setController(UpcomingEventsController::class);
     $blueprint->setIcon('calendar');
 

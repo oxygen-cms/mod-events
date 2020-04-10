@@ -21,20 +21,21 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
                 'label'     => 'ID',
             ],
             [
+                'name'      => 'content',
+                'type'      => 'editor',
+                'editable'  => true,
+                'options'   => [
+                    'rows' => 10,
+                    'fullWidth' => true
+                ]
+            ],
+            [
                 'name'      => 'title',
                 'editable'  => true
             ],
             [
                 'name'      => 'author',
                 'editable'  => true
-            ],
-            [
-                'name'      => 'content',
-                'type'      => 'editor',
-                'editable'  => true,
-                'options'   => [
-                    'rows' => 10
-                ]
             ],
             [
                 'name'      => 'startDate',

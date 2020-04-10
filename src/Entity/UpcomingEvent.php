@@ -107,6 +107,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
                 'max:255'
             ],
             'author' => [
+                'nullable',
                 'name',
                 'max:255'
             ],
@@ -139,6 +140,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      *
      * @param mixed $startDate
      * @return $this
+     * @throws \Exception
      */
 
     public function setStartDate($startDate) {
@@ -154,6 +156,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      *
      * @param mixed $endDate
      * @return $this
+     * @throws \Exception
      */
 
     public function setEndDate($endDate) {
