@@ -12,7 +12,14 @@ interface UpcomingEventRepositoryInterface extends RepositoryInterface {
      * @param int $howMany
      * @return mixed
      */
-
     public function getLatest($howMany);
+
+    /**
+     * Finds event by trybooking session id
+     *
+     * @param $sessionId
+     * @return event
+     */
+    public function findByTrybookingSessionId($sessionId);
 
 }

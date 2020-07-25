@@ -5,6 +5,7 @@ namespace OxygenModule\Events\Fields;
 
 use Oxygen\Core\Form\ContentFieldName;
 use Oxygen\Core\Form\FieldSet;
+use Oxygen\Core\Html\Editor\Editor;
 use OxygenModule\Events\Entity\UpcomingEvent;
 
 class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
@@ -51,6 +52,10 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
                 'name'      => 'active',
                 'type'      => 'checkbox',
                 'editable'  => true
+            ],
+            [
+                'name'      => 'trybookingSessionId',
+                'editable'  => true,
             ],
             [
                 'name'      => 'createdAt',

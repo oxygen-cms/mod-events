@@ -36,51 +36,56 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
     /**
      * @ORM\Column(type="string")
      */
-
     protected $title;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-
     protected $author;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-
     protected $content;
 
     /**
      * @ORM\Column(type="datetime")
      */
-
     protected $startDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-
     protected $endDate;
 
     /**
      * @ORM\Column(type="boolean")
      */
-
     protected $active;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $trybookingSessionId;
+
+    /**
+     * One event takes many bookings.
+     * This is the inverse side.
+     *
+     * @ORM\OneToMany(targetEntity="TeamOfPianists\People\Entity\Booking", mappedBy="event", cascade={"persist", "remove"})
+     */
+    private $bookings;
 
     /**
      * @ORM\OneToMany(targetEntity="OxygenModule\Events\Entity\UpcomingEvent", mappedBy="headVersion", cascade={"persist", "remove", "merge"})
      * @ORM\OrderBy({ "updatedAt" = "DESC" })
      */
-
     private $versions;
 
     /**
      * @ORM\ManyToOne(targetEntity="OxygenModule\Events\Entity\UpcomingEvent",  inversedBy="versions")
      * @ORM\JoinColumn(name="head_version", referencedColumnName="id")
      */
-
     private $headVersion;
 
     /**
@@ -98,9 +103,6 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
 
     public function getValidationRules() {
-        $class = get_class($this);
-        $headVersion = $this->getHeadId();
-
         return [
             'title'  => [
                 'required',
@@ -121,6 +123,9 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
             'endDate' => [
                 'required',
                 'date'
+            ],
+            'trybookingSessionId' => [
+                $this->getUniqueValidationRule('trybookingSessionId')
             ]
         ];
     }
@@ -130,9 +135,24 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      *
      * @return array
      */
-
     protected function getFillableFields() {
-        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'stage'];
+        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'stage', 'trybookingSessionId'];
+    }
+
+    /**
+     * Convert this model to a JSON-friendly format. 
+     */
+    public function toArray() {
+        return [
+            'id' => $this->getId(),
+            'title' => $this->title,
+            'author' => $this->author,
+            'content' => $this->content,
+            'startDate' => $this->startDate->format(\DateTime::ATOM),
+            'endDate' => $this->endDate->format(\DateTime::ATOM),
+            'active' => $this->active,
+            'trybookingSessionId' => $this->trybookingSessionId
+        ];
     }
 
     /**
@@ -142,7 +162,6 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      * @return $this
      * @throws \Exception
      */
-
     public function setStartDate($startDate) {
         if(!($startDate instanceof DateTime)) {
             $startDate = new DateTime($startDate);
@@ -158,7 +177,6 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      * @return $this
      * @throws \Exception
      */
-
     public function setEndDate($endDate) {
         if(!($endDate instanceof DateTime)) {
             $endDate = new DateTime($endDate);

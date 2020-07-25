@@ -2,6 +2,7 @@
 
 namespace OxygenModule\Events\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use OxygenModule\Events\Entity\UpcomingEvent;
 use DateTime;
 use Doctrine\ORM\NoResultException as DoctrineNoResultException;
@@ -57,5 +58,25 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
         } catch(DoctrineNoResultException $e) {
             throw $this->makeNoResultException($e, $q);
         }
+    }
+
+    /**
+     * Finds event by trybooking session id
+     *
+     * @param $sessionId
+     * @return UpcomingEvent
+     * @throws NonUniqueResultException
+     */
+    public function findByTrybookingSessionId($sessionId){
+        $queryParameters = QueryParameters::make()
+            ->excludeTrashed()
+            ->excludeVersions()
+            ->orderBy('id', QueryParameters::DESCENDING);
+
+        $qb = $this->createSelectQuery();
+        $qb = $qb->where($qb->expr()->in('o.trybookingSessionId', ':sessId'))
+            ->setParameter(':sessId', $sessionId);
+        
+        return $this->getQuery($qb, $queryParameters)->getOneOrNullResult();
     }
 }

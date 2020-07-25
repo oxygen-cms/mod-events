@@ -8,6 +8,8 @@ use Oxygen\Crud\BlueprintTrait\SearchableCrudTrait;
 
 Blueprint::make('UpcomingEvent', function(Oxygen\Core\Blueprint\Blueprint $blueprint) {
     $blueprint->setController(UpcomingEventsController::class);
+    $blueprint->setDisplayName('Event');
+    $blueprint->setPluralDisplayName('Events');
     $blueprint->setIcon('calendar');
 
     $blueprint->setToolbarOrders([

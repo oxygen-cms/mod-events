@@ -33,6 +33,8 @@ class EventsServiceProvider extends BaseServiceProvider {
         $this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');
         $this->app[PreferencesManager::class]->loadDirectory(__DIR__ . '/../resources/preferences');
         $this->app[AutomaticMigrator::class]->loadMigrationsFrom(__DIR__ . '/../migrations', 'oxygen/mod-events');
+
+        $this->loadRoutesFrom(__DIR__ . '/../resources/routes.php');
     }
 
     /**
