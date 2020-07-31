@@ -5,6 +5,7 @@ namespace OxygenModule\Events\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Oxygen\Core\Templating\Templatable;
 use Oxygen\Data\Behaviour\Accessors;
 use Oxygen\Data\Behaviour\CacheInvalidator;
 use Oxygen\Data\Behaviour\CacheInvalidatorInterface;
@@ -23,7 +24,7 @@ use Oxygen\Data\Behaviour\Searchable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable {
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
         Publishes::__clone insteadof PrimaryKey;
@@ -114,7 +115,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
                 'max:255'
             ],
             'content' => [
-                'blade_template'
+                'twig_template'
             ],
             'startDate' => [
                 'required',
@@ -189,4 +190,24 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
         return ['title'];
     }
 
+    /**
+     * @return string
+     */
+    public function getResourceType() {
+        return 'events';
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceKey() {
+        return $this->endDate->format(\DateTime::ATOM);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateCode() {
+        return $this->content;
+    }
 }

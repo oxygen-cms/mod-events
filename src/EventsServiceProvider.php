@@ -4,6 +4,7 @@ namespace OxygenModule\Events;
 
 use Doctrine\ORM\EntityManager;
 use Oxygen\Core\Blueprint\BlueprintManager;
+use Oxygen\Core\Templating\TwigTemplateCompiler;
 use OxygenModule\Events\Repository\DoctrineUpcomingEventRepository;
 use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 use OxygenModule\Media\Presenter\HtmlPresenter;
@@ -35,6 +36,10 @@ class EventsServiceProvider extends BaseServiceProvider {
         $this->app[AutomaticMigrator::class]->loadMigrationsFrom(__DIR__ . '/../migrations', 'oxygen/mod-events');
 
         $this->loadRoutesFrom(__DIR__ . '/../resources/routes.php');
+
+        $this->app->resolving(TwigTemplateCompiler::class, function(TwigTemplateCompiler $c, $app) {
+            $c->getTwig()->addGlobal('upcomingEvents', new UpcomingEventsFetcher($app, UpcomingEventRepositoryInterface::class, $c));
+        });
     }
 
     /**
@@ -57,6 +62,7 @@ class EventsServiceProvider extends BaseServiceProvider {
 
     public function provides() {
         return [
+            TwigTemplateCompiler::class,
             UpcomingEventRepositoryInterface::class
         ];
     }
