@@ -2,16 +2,11 @@
 
 namespace OxygenModule\Events;
 
-use Doctrine\ORM\EntityManager;
 use Oxygen\Core\Blueprint\BlueprintManager;
+use Oxygen\Core\Templating\DoctrineResourceLoader;
 use Oxygen\Core\Templating\TwigTemplateCompiler;
 use OxygenModule\Events\Repository\DoctrineUpcomingEventRepository;
 use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
-use OxygenModule\Media\Presenter\HtmlPresenter;
-use OxygenModule\Media\Presenter\PresenterInterface;
-use OxygenModule\Media\Repository\DoctrineMediaRepository;
-use OxygenModule\Media\Repository\MediaRepositoryInterface;
-use OxygenModule\Media\Repository\MediaSubscriber;
 use Oxygen\Data\BaseServiceProvider;
 use Oxygen\Preferences\PreferencesManager;
 use Oxygen\Core\Database\AutomaticMigrator;
@@ -38,7 +33,9 @@ class EventsServiceProvider extends BaseServiceProvider {
         $this->loadRoutesFrom(__DIR__ . '/../resources/routes.php');
 
         $this->app->resolving(TwigTemplateCompiler::class, function(TwigTemplateCompiler $c, $app) {
-            $c->getTwig()->addGlobal('upcomingEvents', new UpcomingEventsFetcher($app, UpcomingEventRepositoryInterface::class, $c));
+            $c->getLoader()->addResourceType('events', new DoctrineResourceLoader($app, UpcomingEventRepositoryInterface::class));
+            $c->getTwig()->addGlobal('upcomingEvents', new UpcomingEventsFetcher($app, $c));
+            $c->setAllowedMethods(UpcomingEventsFetcher::class, ['getLatest', 'render']);
         });
     }
 

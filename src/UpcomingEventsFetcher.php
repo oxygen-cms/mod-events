@@ -7,16 +7,13 @@ namespace OxygenModule\Events;
 use Illuminate\Container\Container;
 use Oxygen\Core\Templating\TwigTemplateCompiler;
 use OxygenModule\Events\Entity\UpcomingEvent;
+use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 
 class UpcomingEventsFetcher {
     /**
      * @var Container
      */
     private $app;
-    /**
-     * @var string
-     */
-    private $repositoryName;
     /**
      * @var TwigTemplateCompiler
      */
@@ -27,27 +24,33 @@ class UpcomingEventsFetcher {
     /**
      * UpcomingEventsFetcher constructor.
      * @param Container $app
-     * @param string $repositoryName
      * @param TwigTemplateCompiler $compiler
      */
-    public function __construct(Container $app, string $repositoryName, TwigTemplateCompiler $compiler) {
+    public function __construct(Container $app, TwigTemplateCompiler $compiler) {
         $this->app = $app;
         $this->compiler = $compiler;
-        $this->repositoryName = $repositoryName;
     }
     
     public function getLatest($amount) {
         $this->loadFromDatabase($amount);
-        return array_map(function(UpcomingEvent $event) {
-            $this->compiler->render($event);
-        }, $this->results[$amount]);
+        return $this->results[$amount];
+    }
+
+    /**
+     * Renders to string
+     *
+     * @param UpcomingEvent $event
+     * @return string
+     */
+    public function render(UpcomingEvent $event) {
+        return $this->compiler->render($event);
     }
     
     private function loadFromDatabase($amount) {
         if(isset($this->results[$amount])) {
             return;
         }
-        $this->results[$amount] = $this->app[$this->repositoryName]->getLatest($amount);
+        $this->results[$amount] = $this->app[UpcomingEventRepositoryInterface::class]->getLatest($amount);
     }
 
 }
