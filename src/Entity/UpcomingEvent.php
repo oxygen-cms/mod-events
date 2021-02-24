@@ -65,9 +65,9 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
     protected $active;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="simple_array", name="trybooking_session_id", nullable=true)
      */
-    protected $trybookingSessionId;
+    protected $trybookingSessionIds;
 
     /**
      * One event takes many bookings.
@@ -124,9 +124,6 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
             'endDate' => [
                 'required',
                 'date'
-            ],
-            'trybookingSessionId' => [
-                $this->getUniqueValidationRule('trybookingSessionId')
             ]
         ];
     }
@@ -137,11 +134,11 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      * @return array
      */
     protected function getFillableFields() {
-        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'stage', 'trybookingSessionId'];
+        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'stage', 'trybookingSessionIds'];
     }
 
     /**
-     * Convert this model to a JSON-friendly format. 
+     * Convert this model to a JSON-friendly format.
      */
     public function toArray() {
         return [
@@ -152,7 +149,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
             'startDate' => $this->startDate->format(\DateTime::ATOM),
             'endDate' => $this->endDate->format(\DateTime::ATOM),
             'active' => $this->active,
-            'trybookingSessionId' => $this->trybookingSessionId
+            'trybookingSessionIds' => $this->trybookingSessionIds === null ? [] : $this->trybookingSessionIds
         ];
     }
 
@@ -209,5 +206,14 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
     public function getTemplateCode() {
         return $this->content;
+    }
+
+    /**
+     * Returns an array of trybooking session ids corresponding to this 'event'
+     *
+     * @return array
+     */
+    public function getTrybookingSessionIds() {
+        return $this->trybookingSessionIds === null ? [] : $this->trybookingSessionIds;
     }
 }

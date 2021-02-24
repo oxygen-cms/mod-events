@@ -54,8 +54,9 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
                 'editable'  => true
             ],
             [
-                'name'      => 'trybookingSessionId',
-                'editable'  => true,
+                'name'      => 'trybookingSessionIds',
+                'editable'  => false,
+                'type' => 'list'
             ],
             [
                 'name'      => 'createdAt',

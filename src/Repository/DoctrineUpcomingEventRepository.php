@@ -52,7 +52,7 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
                  ->setMaxResults($howMany),
             new QueryParameters(['excludeTrashed'])
         );
-        
+
         try {
             return $q->getResult();
         } catch(DoctrineNoResultException $e) {
@@ -73,10 +73,19 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
             ->excludeVersions()
             ->orderBy('id', QueryParameters::DESCENDING);
 
+        $sessionId = intval($sessionId);
+
         $qb = $this->createSelectQuery();
-        $qb = $qb->where($qb->expr()->in('o.trybookingSessionId', ':sessId'))
-            ->setParameter(':sessId', $sessionId);
-        
-        return $this->getQuery($qb, $queryParameters)->getOneOrNullResult();
+        $qb = $qb->where($qb->expr()->like('o.trybookingSessionIds', ':sessId'))
+            ->setParameter(':sessId', '%' . $sessionId . '%');
+
+        $events = $this->getQuery($qb, $queryParameters)->getResult();
+        $events = array_filter($events, function($event) use($sessionId) {
+            return in_array($sessionId, $event->getTrybookingSessionIds());
+        });
+        if(count($events) !== 1) {
+            throw new NonUniqueResultException(count($events) . ' events found, expecting one unique event');
+        }
+        return array_shift($events);
     }
 }
