@@ -3,6 +3,7 @@
 namespace OxygenModule\Events\Repository;
 
 use Oxygen\Data\Repository\RepositoryInterface;
+use OxygenModule\Events\Entity\UpcomingEvent;
 
 interface UpcomingEventRepositoryInterface extends RepositoryInterface {
 
@@ -17,8 +18,8 @@ interface UpcomingEventRepositoryInterface extends RepositoryInterface {
     /**
      * Finds event by trybooking session id
      *
-     * @param $sessionId
-     * @return event
+     * @param int $sessionId
+     * @return UpcomingEvent
      */
     public function findByTrybookingSessionId($sessionId);
 
