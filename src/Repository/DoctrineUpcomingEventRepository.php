@@ -3,6 +3,7 @@
 namespace OxygenModule\Events\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use OxygenModule\Events\Entity\UpcomingEvent;
 use DateTime;
 use Doctrine\ORM\NoResultException as DoctrineNoResultException;
@@ -24,7 +25,6 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
      *
      * @var string
      */
-
     protected $entityName = UpcomingEvent::class;
 
     /**
@@ -33,9 +33,8 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
      * @param int $howMany
      * @return array
      * @throws NoResultException if no results were found
-     * @throws \Exception
+     * @throws Exception
      */
-
     public function getLatest($howMany) {
         $currentDate = new DateTime();
 
@@ -63,7 +62,7 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
     /**
      * Finds event by trybooking session id
      *
-     * @param $sessionId
+     * @param int $sessionId
      * @return UpcomingEvent
      * @throws NonUniqueResultException
      */
