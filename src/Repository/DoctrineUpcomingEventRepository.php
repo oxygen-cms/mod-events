@@ -83,8 +83,10 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
         $events = array_filter($events, function($event) use($sessionId) {
             return in_array($sessionId, $event->getTrybookingSessionIds());
         });
-        if(count($events) !== 1) {
+        if(count($events) > 1) {
             throw new NonUniqueResultException(count($events) . ' events found, expecting one unique event');
+        } else if(empty($events)) {
+            return null;
         }
         return array_shift($events);
     }
