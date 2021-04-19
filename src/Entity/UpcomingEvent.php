@@ -10,11 +10,13 @@ use Oxygen\Data\Behaviour\Accessors;
 use Oxygen\Data\Behaviour\CacheInvalidator;
 use Oxygen\Data\Behaviour\CacheInvalidatorInterface;
 use Oxygen\Data\Behaviour\Fillable;
+use Oxygen\Data\Behaviour\HasUpdatedAt;
 use Oxygen\Data\Behaviour\PrimaryKey;
 use Oxygen\Data\Behaviour\PrimaryKeyInterface;
 use Oxygen\Data\Behaviour\Publishes;
 use Oxygen\Data\Behaviour\SoftDeletes;
 use Oxygen\Data\Behaviour\Timestamps;
+use Oxygen\Data\Behaviour\Versionable;
 use Oxygen\Data\Behaviour\Versions;
 use Oxygen\Data\Validation\Validatable;
 use Oxygen\Data\Behaviour\Searchable;
@@ -24,7 +26,7 @@ use Oxygen\Data\Behaviour\Searchable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable, Versionable, HasUpdatedAt {
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
         Publishes::__clone insteadof PrimaryKey;
@@ -162,7 +164,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
     public function setStartDate($startDate) {
         if(!($startDate instanceof DateTime)) {
-            $startDate = new DateTime($startDate);
+            $startDate = DateTime::createFromFormat('Y-m-d', $startDate);
         }
         $this->startDate = $startDate;
         return $this;
@@ -177,7 +179,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
     public function setEndDate($endDate) {
         if(!($endDate instanceof DateTime)) {
-            $endDate = new DateTime($endDate);
+            $endDate = DateTime::createFromFormat('Y-m-d', $endDate);
         }
         $this->endDate = $endDate;
         return $this;

@@ -9,7 +9,6 @@ use OxygenModule\Events\Repository\DoctrineUpcomingEventRepository;
 use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
 use Oxygen\Data\BaseServiceProvider;
 use Oxygen\Preferences\PreferencesManager;
-use Oxygen\Core\Database\AutomaticMigrator;
 
 class EventsServiceProvider extends BaseServiceProvider {
 
@@ -28,7 +27,7 @@ class EventsServiceProvider extends BaseServiceProvider {
     public function boot() {
         $this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');
         $this->app[PreferencesManager::class]->loadDirectory(__DIR__ . '/../resources/preferences');
-        $this->app[AutomaticMigrator::class]->loadMigrationsFrom(__DIR__ . '/../migrations', 'oxygen/mod-events');
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
 
         $this->loadRoutesFrom(__DIR__ . '/../resources/routes.php');
 

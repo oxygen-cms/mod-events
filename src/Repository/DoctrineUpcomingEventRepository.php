@@ -4,19 +4,19 @@ namespace OxygenModule\Events\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
+use Oxygen\Data\Repository\ExcludeTrashedScope;
 use OxygenModule\Events\Entity\UpcomingEvent;
 use DateTime;
 use Doctrine\ORM\NoResultException as DoctrineNoResultException;
 use Oxygen\Data\Exception\NoResultException;
 use Oxygen\Data\Repository\Doctrine\Publishes;
 use Oxygen\Data\Repository\Doctrine\Repository;
-use Oxygen\Data\Repository\Doctrine\SoftDeletes;
 use Oxygen\Data\Repository\Doctrine\Versions;
 use Oxygen\Data\Repository\QueryParameters;
 
 class DoctrineUpcomingEventRepository extends Repository implements UpcomingEventRepositoryInterface {
 
-    use SoftDeletes, Versions, Publishes {
+    use Versions, Publishes {
         Publishes::persist insteadof Versions;
     }
 
@@ -49,7 +49,7 @@ class DoctrineUpcomingEventRepository extends Repository implements UpcomingEven
                  ->setParameter('active', true)
                  ->orderBy('o.endDate', 'ASC')
                  ->setMaxResults($howMany),
-            new QueryParameters(['excludeTrashed'])
+            new QueryParameters([new ExcludeTrashedScope()])
         );
 
         try {
