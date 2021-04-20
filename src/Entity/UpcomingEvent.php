@@ -148,8 +148,8 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
             'title' => $this->title,
             'author' => $this->author,
             'content' => $this->content,
-            'startDate' => $this->startDate->format(\DateTime::ATOM),
-            'endDate' => $this->endDate->format(\DateTime::ATOM),
+            'startDate' => $this->startDate->format(\DateTimeInterface::ATOM),
+            'endDate' => $this->endDate->format(\DateTimeInterface::ATOM),
             'active' => $this->active,
             'trybookingSessionIds' => $this->trybookingSessionIds === null ? [] : $this->trybookingSessionIds
         ];
@@ -200,7 +200,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      * @return string
      */
     public function getResourceKey() {
-        return $this->endDate->format(\DateTime::ATOM);
+        return $this->endDate->format(\DateTimeInterface::ATOM);
     }
 
     /**
