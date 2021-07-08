@@ -5,6 +5,7 @@ namespace OxygenModule\Events\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Oxygen\Core\Templating\Templatable;
 use Oxygen\Data\Behaviour\Accessors;
 use Oxygen\Data\Behaviour\CacheInvalidator;
@@ -26,7 +27,7 @@ use Oxygen\Data\Behaviour\Searchable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable, Versionable, HasUpdatedAt {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable, Versionable, HasUpdatedAt, UrlRoutable {
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
         Publishes::__clone insteadof PrimaryKey;
@@ -218,4 +219,5 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
     public function getTrybookingSessionIds() {
         return $this->trybookingSessionIds === null ? [] : $this->trybookingSessionIds;
     }
+
 }

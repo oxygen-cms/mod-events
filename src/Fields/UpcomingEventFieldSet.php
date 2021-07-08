@@ -40,12 +40,14 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
             ],
             [
                 'name'      => 'startDate',
+                'label'     => 'Display from this date',
                 'type'      => 'date',
                 'editable'  => true
             ],
             [
                 'name'      => 'endDate',
                 'type'      => 'date',
+                'label'     => 'Event Date',
                 'editable'  => true
             ],
             [
