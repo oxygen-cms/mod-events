@@ -17,9 +17,9 @@ Blueprint::make('UpcomingEvent', function(Oxygen\Core\Blueprint\Blueprint $bluep
             'getList.search', 'getCreate', 'getTrash'
         ],
         'item' => [
+            'postPublish',
             'getPreview',
-            'getUpdate,More' => ['postPublish', 'getInfo', 'deleteDelete', 'postRestore', 'deleteForce'],
-            'Version' => ['postMakeDraft', 'postNewVersion', 'postMakeHeadVersion']
+            'getUpdate,More' => ['getInfo', 'postNewVersion', 'postMakeHeadVersion', 'deleteDelete', 'postRestore', 'deleteForce']
         ],
         'versionList' => [
             'deleteVersions'

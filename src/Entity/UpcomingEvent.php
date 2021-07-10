@@ -14,6 +14,7 @@ use Oxygen\Data\Behaviour\Fillable;
 use Oxygen\Data\Behaviour\HasUpdatedAt;
 use Oxygen\Data\Behaviour\PrimaryKey;
 use Oxygen\Data\Behaviour\PrimaryKeyInterface;
+use Oxygen\Data\Behaviour\Publishable;
 use Oxygen\Data\Behaviour\Publishes;
 use Oxygen\Data\Behaviour\SoftDeletes;
 use Oxygen\Data\Behaviour\Timestamps;
@@ -27,14 +28,11 @@ use Oxygen\Data\Behaviour\Searchable;
  * @ORM\Table(name="upcoming_events")
  * @ORM\HasLifecycleCallbacks
  */
-class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable, Versionable, HasUpdatedAt, UrlRoutable {
+class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidatorInterface, Searchable, Templatable, Versionable, HasUpdatedAt, UrlRoutable, Publishable {
 
-    use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator {
-        Publishes::__clone insteadof PrimaryKey;
-    }
+    use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator;
     use Accessors, Fillable;
 
-    const STAGE_DRAFT = 0;
     const STAGE_PUBLISHED = 1;
 
     /**

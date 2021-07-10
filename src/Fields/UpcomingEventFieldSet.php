@@ -35,7 +35,9 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
                 'editable'  => true
             ],
             [
-                'name'      => 'author',
+                'name'      => 'endDate',
+                'type'      => 'date',
+                'label'     => 'Event Date',
                 'editable'  => true
             ],
             [
@@ -45,14 +47,13 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
                 'editable'  => true
             ],
             [
-                'name'      => 'endDate',
-                'type'      => 'date',
-                'label'     => 'Event Date',
+                'name'      => 'active',
+                'label'     => 'Display on website',
+                'type'      => 'checkbox',
                 'editable'  => true
             ],
             [
-                'name'      => 'active',
-                'type'      => 'checkbox',
+                'name'      => 'author',
                 'editable'  => true
             ],
             [

@@ -17,7 +17,7 @@ use Oxygen\Data\Repository\QueryParameters;
 class DoctrineUpcomingEventRepository extends Repository implements UpcomingEventRepositoryInterface {
 
     use Versions, Publishes {
-        Publishes::persist insteadof Versions;
+        Publishes::onEntityPersisted insteadof Versions;
     }
 
     /**
