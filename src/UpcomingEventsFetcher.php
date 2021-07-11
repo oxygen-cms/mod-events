@@ -8,6 +8,9 @@ use Illuminate\Container\Container;
 use Oxygen\Core\Templating\TwigTemplateCompiler;
 use OxygenModule\Events\Entity\UpcomingEvent;
 use OxygenModule\Events\Repository\UpcomingEventRepositoryInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class UpcomingEventsFetcher {
     /**
@@ -18,7 +21,7 @@ class UpcomingEventsFetcher {
      * @var TwigTemplateCompiler
      */
     private $compiler;
-    
+
     private $results = [];
 
     /**
@@ -30,7 +33,7 @@ class UpcomingEventsFetcher {
         $this->app = $app;
         $this->compiler = $compiler;
     }
-    
+
     public function getLatest($amount) {
         $this->loadFromDatabase($amount);
         return $this->results[$amount];
@@ -41,11 +44,14 @@ class UpcomingEventsFetcher {
      *
      * @param UpcomingEvent $event
      * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function render(UpcomingEvent $event) {
         return $this->compiler->render($event);
     }
-    
+
     private function loadFromDatabase($amount) {
         if(isset($this->results[$amount])) {
             return;
