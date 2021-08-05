@@ -163,7 +163,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
     public function setStartDate($startDate) {
         if(!($startDate instanceof DateTime)) {
-            $startDate = DateTime::createFromFormat('Y-m-d', $startDate);
+            $startDate = new DateTime($startDate);
         }
         $this->startDate = $startDate;
         return $this;
@@ -178,7 +178,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      */
     public function setEndDate($endDate) {
         if(!($endDate instanceof DateTime)) {
-            $endDate = DateTime::createFromFormat('Y-m-d', $endDate);
+            $endDate = new DateTime($endDate);
         }
         $this->endDate = $endDate;
         return $this;
