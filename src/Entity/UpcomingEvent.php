@@ -130,6 +130,20 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
     }
 
     /**
+     * @return mixed
+     */
+    public function getEndDate() {
+        return $this->endDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
      * Returns the fields that should be fillable.
      *
      * @return array
