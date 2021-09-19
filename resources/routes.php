@@ -1,6 +1,6 @@
 <?php
 
-Route::middleware(['web', 'oxygen.auth', '2fa.require'])->group(function() {
+Route::middleware('api_auth')->group(function() {
     Route::get('/oxygen/api/upcoming-events', '\OxygenModule\Events\Controller\UpcomingEventsController@getListApi')
         ->name('upcomingEvents.getListApi')
         ->middleware('oxygen.permissions:upcomingEvents.getList');
