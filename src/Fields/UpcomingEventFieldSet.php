@@ -76,7 +76,7 @@ class UpcomingEventFieldSet extends FieldSet implements ContentFieldName {
             [
                 'name' => 'stage',
                 'type' => 'select',
-                'editable' => true,
+                'editable' => false,
                 'options' => [
                     UpcomingEvent::STAGE_DRAFT => 'Draft',
                     UpcomingEvent::STAGE_PUBLISHED => 'Published'

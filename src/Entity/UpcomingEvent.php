@@ -32,7 +32,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
 
     use PrimaryKey, Timestamps, SoftDeletes, Versions, Publishes, CacheInvalidator;
     use Accessors, Fillable;
-
+    
     const STAGE_PUBLISHED = 1;
 
     /**
@@ -149,7 +149,7 @@ class UpcomingEvent implements PrimaryKeyInterface, Validatable, CacheInvalidato
      * @return array
      */
     protected function getFillableFields() {
-        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'stage', 'trybookingSessionIds'];
+        return ['title', 'author', 'content', 'startDate', 'endDate', 'active', 'trybookingSessionIds'];
     }
 
     /**
