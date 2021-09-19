@@ -27,15 +27,8 @@
         }
     },
     "extra": {
-        "title": "Oxygen Module - Events",
-        "readme": "oxygen.md",
-        "changes": "changes.md",
-        "providers": [
-            {
-                "name": "Events",
-                "class": "OxygenModule\\Events\\EventsServiceProvider",
-                "description": "Adds the Events module"
-            }
+        "laravel": [
+            "OxygenModule\\Events\\EventsServiceProvider"
         ]
     },
     "require-dev": {
