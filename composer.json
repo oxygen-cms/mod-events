@@ -27,9 +27,11 @@
         }
     },
     "extra": {
-        "laravel": [
-            "OxygenModule\\Events\\EventsServiceProvider"
-        ]
+        "laravel": {
+            "providers": [
+                "OxygenModule\\Events\\EventsServiceProvider"
+            ]
+        }
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.18",
